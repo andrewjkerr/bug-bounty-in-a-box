@@ -1,0 +1,12 @@
+# The Slack webhook endpoint.
+slack_url: 'https://hooks.slack.com/services/<something>'
+# Logging configuration.
+logs:
+    # The request logs.
+    request:
+        file: 'logs/requests.log'
+        rotate: 'daily'
+    # The payload logs.
+    payload:
+        file: 'logs/payloads.log'
+        rotate: 'daily'
