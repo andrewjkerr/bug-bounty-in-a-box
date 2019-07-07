@@ -61,12 +61,26 @@ route *ALL_HTTP_METHODS, '/callback' do
     "Callback successful!\n"
 end
 
-# GET, POST, PUT/PATCH, DELETE, HEAD, OPTIONS /js
+# GET, POST, PUT/PATCH, DELETE, HEAD, OPTIONS /payload
 #
-# A route that returns a JavaScript payload file.
-route *ALL_HTTP_METHODS, '/js' do
+# A route that returns a payload file.
+#
+# Required parameters:
+# * `type`: The payload type.
+route *ALL_HTTP_METHODS, '/payload' do
+    halt 400, 'No type provided.' if params['type'].nil?
+
+    supported_payloads = [
+        'js',
+        'svg',
+    ]
+
+    unless supported_payloads.include?(params['type'])
+        halt 400, "Invalid type provided: #{params['type']}"
+    end
+
     # Build our callback query string.
-    query_string = '?payload=js_file'
+    query_string = "?payload=#{params['type']}_file"
 
     # Add a target if we have one.
     query_string += "&target=#{URI::encode(params['target'])}" unless params['target'].nil?
@@ -75,10 +89,10 @@ route *ALL_HTTP_METHODS, '/js' do
     @callback_url = Config.instance.application_url + '/callback' + query_string
 
     # Set the Content-Type header.
-    headers['Content-Type'] = ContentType::JAVASCRIPT + '; charset=UTF-8'
+    headers['Content-Type'] = ContentType.const_get(params['type'].upcase) + '; charset=UTF-8'
 
     # Render our payload.
-    renderer = ERB.new(File.read('templates/payload.js.erb'))
+    renderer = ERB.new(File.read("templates/payload.#{params['type']}.erb"))
     renderer.result(binding)
 end
 
@@ -91,28 +105,6 @@ end
 route *ALL_HTTP_METHODS, '/redirect' do
     halt 400, 'Empty redirect parameter' if params['redirect'].nil?
     redirect params['redirect']
-end
-
-
-# GET, POST, PUT/PATCH, DELETE, HEAD, OPTIONS /js
-#
-# A route that returns a JavaScript payload file.
-route *ALL_HTTP_METHODS, '/svg' do
-    # Build our callback query string.
-    query_string = '?payload=svg_file'
-
-    # Add a target if we have one.
-    query_string += "&target=#{URI::encode(params['target'])}" unless params['target'].nil?
-
-    # And, finally, build the callback URL!
-    @callback_url = Config.instance.application_url + '/callback' + query_string
-
-    # Set the Content-Type header.
-    headers['Content-Type'] = ContentType::SVG + '; charset=UTF-8'
-
-    # Render our payload.
-    renderer = ERB.new(File.read('templates/payload.svg.erb'))
-    renderer.result(binding)
 end
 
 # GET, POST, PUT/PATCH, DELETE, HEAD, OPTIONS /unauthorized

@@ -4,7 +4,7 @@
 
 This second pre-release version contains some new routes:
 
-1. `/js`: A JavaScript payload file with a callback URL for your Bug Bounty in a Box instance.
+1. `/payload`: Will return payload file of your type choice with a callback URL for your Bug Bounty in a Box instance.
 1. `/unauthorized`: Sends a 401 for non-OPTIONS & non-HEAD requests with a `Content-Type` header of your choice.
 
 As well as the following changes:

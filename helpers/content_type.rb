@@ -5,6 +5,7 @@ module ContentType
 
     # Application types
     FORM_URLENCODED = 'application/x-www-form-urlencoded'
+    JS = 'application/javascript'
     JAVASCRIPT = 'application/javascript'
     JSON = 'application/json'
     OCTET_STREAM = 'application/octet-stream'
