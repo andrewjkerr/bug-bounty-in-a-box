@@ -1,0 +1,9 @@
+# Ignore application configuration
+/config/application.yml
+
+# Ignore logs
+/logs
+
+# Ignore the payloads
+/payloads/*.yml
+/payloads/*.txt
