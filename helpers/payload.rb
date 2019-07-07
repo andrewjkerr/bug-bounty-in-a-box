@@ -47,6 +47,9 @@ class Payload
         @logger.info(summary)
     end
 
+    # Returns a summary for logging.
+    #
+    # @return [String] The summary.
     def summary
         return "Payload '#{@payload}' fired for #{@target}"
     end
