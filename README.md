@@ -42,8 +42,9 @@ The callback server, written in Ruby & using [Sinatra](http://sinatrarb.com/), c
 * Callback: A callback with a payload & target parameter will log the "callback" to a on-server text log as well as send a Slack message to a Slack webhook. (`/callback`)
 * Payloads: A payload file of your choice that will contain your callback URL. (`/payload`)
     * Currently supports:
-        * JavaScript (`js`)
-        * SVG (`svg`)
+        * JavaScript (`js`) for XSS
+        * SVG (`svg`) for XSS
+        * XML (`xml`) for XXE
 * Redirect: Redirects to a specified URL in the redirect GET parameter. (`/redirect`)
 * Unauthorized: Throws a 401 for non-OPTIONS & non-HEAD requests. Also accepts a content_type parameter to return a specific content type. (`/unauthorized`)
 

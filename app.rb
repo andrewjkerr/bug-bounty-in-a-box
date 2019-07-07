@@ -71,8 +71,9 @@ route *ALL_HTTP_METHODS, '/payload' do
     halt 400, 'No type provided.' if params['type'].nil?
 
     supported_payloads = [
-        'js',
-        'svg',
+        'js', # XSS payload
+        'svg', # XSS payload
+        'xml', # XXE payload
     ]
 
     unless supported_payloads.include?(params['type'])
