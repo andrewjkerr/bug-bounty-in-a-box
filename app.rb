@@ -1,8 +1,10 @@
+require 'erb'
 require 'httparty'
 require 'logger'
 require 'sinatra'
 require 'sinatra/multi_route'
 require 'singleton'
+require 'uri'
 require 'yaml'
 
 require_relative 'helpers/config.rb'
@@ -59,18 +61,33 @@ route *ALL_HTTP_METHODS, '/callback' do
     "Callback successful!\n"
 end
 
+# GET, POST, PUT/PATCH, DELETE, HEAD, OPTIONS /js
+#
+# A route that returns a JavaScript payload file.
+route *ALL_HTTP_METHODS, '/js' do
+    # Build our callback query string.
+    query_string = '?payload=js_file'
+
+    # Add a target if we have one.
+    query_string += "&target=#{URI::encode(params['target'])}" unless params['target'].nil?
+
+    # And, finally, build the callback URL!
+    @callback_url = Config.instance.application_url + '/callback' + query_string
+
+    # Set the Content-Type header.
+    headers['Content-Type'] = ContentType::JAVASCRIPT + '; charset=UTF-8'
+
+    # Render our payload.
+    renderer = ERB.new(File.read('templates/payload.js.erb'))
+    renderer.result(binding)
+end
+
 # GET, POST, PUT/PATCH, DELETE, HEAD, OPTIONS /redirect
 #
-# A callback route that:
-# 1. Logs the callback parameters
-# 2. Alerts in Slack
+# Redirects to the URL specified in the "redirect" parameter.
 #
 # Required parameters:
 # * `redirect`: The URL to redirect to.
-#
-# Optional parameters:
-#
-# Example: GET /redirect?redirect=https://www.example.com
 route *ALL_HTTP_METHODS, '/redirect' do
     halt 400, 'Empty redirect parameter' if params['redirect'].nil?
     redirect params['redirect']

@@ -40,7 +40,9 @@ This "bug bounty in a box" has two different components:
 The callback server, written in Ruby & using [Sinatra](http://sinatrarb.com/), currently has the following capabilities:
 
 * Callback: A callback with a payload & target parameter will log the "callback" to a on-server text log as well as send a Slack message to a Slack webhook. (`/callback`)
+* JavaScript Payload: A JavaScript payload file that will contain your callback URL. (`/js`)
 * Redirect: Redirects to a specified URL in the redirect GET parameter. (`/redirect`)
+* Unauthorized: Throws a 401 for non-OPTIONS & non-HEAD requests. Also accepts a content_type parameter to return a specific content type. (`/unauthorized`)
 
 #### Configuring the server
 

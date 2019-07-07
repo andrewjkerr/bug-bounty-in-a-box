@@ -9,6 +9,10 @@
 class Config
     include Singleton
 
+    # The application URL key for the configuration file.
+    # @return [String] The application URL.
+    APPLICATION_URL_KEY = 'application_url'
+
     # The Slack URL key for the configuration file.
     # @return [String] The Slack URL configuration key.
     SLACK_URL_KEY = 'slack_url'
@@ -27,10 +31,24 @@ class Config
     def load!(config_file)
         @config = YAML.load(config_file)
 
-        # Set our Slack URL.
+        # Ensure the Slack URL key is set.
+        if @config[APPLICATION_URL_KEY].nil?
+            raise Exception.new("Ruh roh, you need to define a an application URL using #{APPLICATION_URL_KEY} in your configuration!")
+        end
+
+        # Ensure the Slack URL key is set.
         if @config[SLACK_URL_KEY].nil?
             raise Exception.new("Ruh roh, you need to define a Slack endpoint using #{SLACK_URL_KEY} in your configuration!")
         end
+    end
+
+    # Returns the application URL from the configuration.
+    #
+    # @return [String] The application URL.
+    def application_url
+        raise Exception.new('You need to load the configuration before using it.') if @config.nil?
+
+        return @config[APPLICATION_URL_KEY]
     end
 
     # Returns the logging configuration for a given log.
@@ -79,6 +97,8 @@ class Config
     #
     # @return [String] The Slack URL.
     def slack_url
+        raise Exception.new('You need to load the configuration before using it.') if @config.nil?
+
         return @config[SLACK_URL_KEY]
     end
 
