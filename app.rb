@@ -147,25 +147,20 @@ route *ALL_HTTP_METHODS, '/unauthorized' do
     halt 401
 end
 
-helpers do
-end
-
-# Loads our configuration file into environment variables for use later.
+##
+# Load our configuration file!
 #
-# @return [Void]
-def load_configuration!
-    config_file_location = DEFAULT_CONFIG_FILE
-    config_file_location = ARGV[0] unless ARGV[0].nil?
+# We do this when the server starts to catch any errors on startup. :)
+##
+config_file_location = DEFAULT_CONFIG_FILE
+config_file_location = ARGV[0] unless ARGV[0].nil?
 
-    begin
-        config_file = File.read(config_file_location)
-    rescue Exception => e
-        puts "Oops, the config file does not exist: #{config_file_location}"
-        raise e
-    end
-
-    # Load the config!
-    Config.instance.load!(config_file)
+begin
+    config_file = File.read(config_file_location)
+rescue Exception => e
+    puts "Oops, the config file does not exist: #{config_file_location}"
+    raise e
 end
 
-load_configuration!
+# Load the config!
+Config.instance.load!(config_file)
