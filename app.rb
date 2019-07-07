@@ -69,14 +69,23 @@ end
 # * `type`: The payload type.
 route *ALL_HTTP_METHODS, '/payload' do
     halt 400, 'No type provided.' if params['type'].nil?
+    halt 400, 'No exploit provided.' if params['exploit'].nil?
 
-    supported_payloads = [
-        'js', # XSS payload
-        'svg', # XSS payload
-        'xml', # XXE payload
-    ]
+    supported_payloads = {
+        'xss' => [
+            'js',
+            'svg',
+        ],
+        'xxe' => [
+            'xml',
+        ]
+    }
 
-    unless supported_payloads.include?(params['type'])
+    if supported_payloads[params['exploit']].nil?
+        halt 400, "Invalid exploit type provided: #{params['exploit']}"
+    end
+
+    unless supported_payloads[params['exploit']].include?(params['type'])
         halt 400, "Invalid type provided: #{params['type']}"
     end
 
@@ -93,7 +102,8 @@ route *ALL_HTTP_METHODS, '/payload' do
     headers['Content-Type'] = ContentType.const_get(params['type'].upcase) + '; charset=UTF-8'
 
     # Render our payload.
-    renderer = ERB.new(File.read("templates/payload.#{params['type']}.erb"))
+    file_path = "templates/payloads/#{params['exploit']}/payload.#{params['type']}.erb"
+    renderer = ERB.new(File.read(file_path))
     renderer.result(binding)
 end
 
