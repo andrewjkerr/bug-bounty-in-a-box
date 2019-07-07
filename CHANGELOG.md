@@ -13,8 +13,11 @@ This second pre-release version contains some new routes:
 
 As well as the following changes:
 
+1. Docker container for the server!!
 1. Actually log/message the request URI. My b. If you were alreadying parsing request logs, you'll need to account for the fact that the request URI is now the first attribute in the log.
-1. Remove some debug `p`s. Whoops.
+1. Configuration is now loaded on server start instead of first request.
+1. Fixed a bug where you couldn't pass in a custom config file location. Sorry about that!
+1. Removed some debug `p`s. Whoops.
 1. Removed my hardcoded `hack @ ajoekerr` references. Now you won't see me & Juniper in Slack :sweat_smile:.
 1. Some doc updates. Nothing huge.
 

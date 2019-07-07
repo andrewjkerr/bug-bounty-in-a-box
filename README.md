@@ -29,6 +29,26 @@ To get up & hacking, you'll need to:
 1. Cross your fingers...
 1. Profit!
 
+### :whale: Docker Quickstart
+
+_Note: You cannot currently generate payloads with the Docker container. The Docker container only runs the server._
+
+To get up & running in Docker, clone this repository and run the following:
+
+```bash
+mv config/application.yml.sample config/application.yml
+vim config/application.yml # Edit your config values!
+mkdir -p logs
+docker build -t bbb . && docker run -d \
+-v $(pwd)/config/application.yml:/app/config/application.yml \
+-v $(pwd)/logs/:/app/logs/ \
+-p 4567:4567 \
+-e "APP_ENV=production" \
+bbb
+```
+
+Then, you should be able to `curl localhost:4567` and see the hello world!
+
 ## :information_desk_person: How does this work?
 
 This "bug bounty in a box" has two different components:

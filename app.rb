@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 require 'erb'
 require 'httparty'
 require 'logger'
@@ -33,10 +35,11 @@ ALL_HTTP_METHODS = [
 # @return [String] The default config file location.
 DEFAULT_CONFIG_FILE = 'config/application.yml'
 
+
+
 # Execute this method before any request! Currently all this does is
 # log the request to our request log.
 before do
-    load_configuration!
     @incoming_request = Request.new(request)
     @incoming_request.log!
 end
@@ -149,21 +152,24 @@ route *ALL_HTTP_METHODS, '/unauthorized' do
 end
 
 helpers do
-
-    # Loads our configuration file into environment variables for use later.
-    #
-    # @return [Void]
-    def load_configuration!
-        config_file_location = DEFAULT_CONFIG_FILE
-        config_file_location = ARGV[1] unless ARGV[1].nil?
-
-        begin
-            config_file = File.read(config_file_location)
-        rescue Exception => e
-            puts "Oops, the config file does not exist: #{config_file_location}"
-            raise e
-        end
-
-        Config.instance.load!(config_file)
-    end
 end
+
+# Loads our configuration file into environment variables for use later.
+#
+# @return [Void]
+def load_configuration!
+    config_file_location = DEFAULT_CONFIG_FILE
+    config_file_location = ARGV[0] unless ARGV[0].nil?
+
+    begin
+        config_file = File.read(config_file_location)
+    rescue Exception => e
+        puts "Oops, the config file does not exist: #{config_file_location}"
+        raise e
+    end
+
+    # Load the config!
+    Config.instance.load!(config_file)
+end
+
+load_configuration!
