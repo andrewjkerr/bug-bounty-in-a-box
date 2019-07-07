@@ -6,6 +6,13 @@
 
 This is by no means "production ready"; there are still some server configuration options that need to be explored before this should be run in production.
 
+### To-do list
+
+1. Productionize the Sinatra callback server
+1. Add more payloads!
+1. Add more endpoints!
+1. Add "Development" guide
+
 ## Quickstart
 
 To get up & hacking, you'll need to:
