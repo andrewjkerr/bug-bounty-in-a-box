@@ -1,5 +1,3 @@
-#!/usr/bin/ruby
-
 require 'erb'
 require 'httparty'
 require 'logger'
