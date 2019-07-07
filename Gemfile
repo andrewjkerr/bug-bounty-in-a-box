@@ -18,4 +18,7 @@ group :development do
     # A ~ fancy ~ IRB.
     gem 'pry', '~> 0.12.2'
     gem 'pry-coolline', '~> 0.2.5'
+
+    # Progress bar for ~ fancy ~ payload generation.
+    gem 'ruby-progressbar', '~> 1.10.1'
 end

