@@ -93,6 +93,28 @@ route *ALL_HTTP_METHODS, '/redirect' do
     redirect params['redirect']
 end
 
+
+# GET, POST, PUT/PATCH, DELETE, HEAD, OPTIONS /js
+#
+# A route that returns a JavaScript payload file.
+route *ALL_HTTP_METHODS, '/svg' do
+    # Build our callback query string.
+    query_string = '?payload=svg_file'
+
+    # Add a target if we have one.
+    query_string += "&target=#{URI::encode(params['target'])}" unless params['target'].nil?
+
+    # And, finally, build the callback URL!
+    @callback_url = Config.instance.application_url + '/callback' + query_string
+
+    # Set the Content-Type header.
+    headers['Content-Type'] = ContentType::SVG + '; charset=UTF-8'
+
+    # Render our payload.
+    renderer = ERB.new(File.read('templates/payload.svg.erb'))
+    renderer.result(binding)
+end
+
 # GET, POST, PUT/PATCH, DELETE, HEAD, OPTIONS /unauthorized
 #
 # A route that returns a 401 for a given content type. Will return 200 for OPTIONS & HEAD
