@@ -4,18 +4,18 @@ This repository contains all\* that you should need to get up and running to tes
 
 \* Ok, literally not _everything_ but it's a good start!
 
-## Project Status
+## :vertical_traffic_light: Project Status
 
 This is by no means "production ready"; there are still some server configuration options that need to be explored before this should be run in production.
 
-### To-do list
+### :shipit: To-do list
 
 1. Productionize the Sinatra callback server
 1. Add more payloads!
 1. Add more endpoints!
 1. Add "Development" guide
 
-## Quickstart
+## :running: Quickstart
 
 To get up & hacking, you'll need to:
 
@@ -29,13 +29,13 @@ To get up & hacking, you'll need to:
 1. Cross your fingers...
 1. Profit!
 
-## How does this work?
+## :information_desk_person: How does this work?
 
 This "bug bounty in a box" has two different components:
 1. A payload callback server
 1. A payload generator
 
-### Callback Server
+### :pager: Callback Server
 
 The callback server, written in Ruby & using [Sinatra](http://sinatrarb.com/), currently has the following capabilities:
 
@@ -54,7 +54,7 @@ In order to receive Slack callbacks, you'll need to set the appropriate `slack_u
 
 If you'd like to change either the frequency of the log rotation or the log filenames, check out the configuration file.
 
-### Payload Generator
+### :smiling_imp: Payload Generator
 
 The payload generator uses `.yml` files to generate a `.txt` files that contain a list of payloads that can be used in a tool like Burp Intruder.
 
@@ -82,7 +82,7 @@ payloads:
 
 The `CALLBACK_URL` will be replaced with whatever is passed in with the `--callback` flag with some added parameters of (1) a callback description & (2) the target.
 
-## Contributing
+## :raised_hands: Contributing
 
 Want to contribute? Great! Here's what you do:
 
