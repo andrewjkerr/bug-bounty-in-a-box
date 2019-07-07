@@ -10,7 +10,6 @@ This is by no means "production ready"; there are still some server configuratio
 
 ### :shipit: To-do list
 
-1. Productionize the Sinatra callback server
 1. Add more payloads!
 1. Add more endpoints!
 1. Add "Development" guide
@@ -48,6 +47,10 @@ bbb
 ```
 
 Then, you should be able to `curl localhost:4567` and see the hello world!
+
+### :globe_with_meridians: Production Quickstart
+
+If you'd like to know how to set up the Bug Bounty in a Box callback server for "production" use, check out [the Wiki](https://github.com/andrewjkerr/bug-bounty-in-a-box/wiki/Running-in-%22production%22).
 
 ## :information_desk_person: How does this work?
 
