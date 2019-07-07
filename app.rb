@@ -33,8 +33,6 @@ ALL_HTTP_METHODS = [
 # @return [String] The default config file location.
 DEFAULT_CONFIG_FILE = 'config/application.yml'
 
-
-
 # Execute this method before any request! Currently all this does is
 # log the request to our request log.
 before do
