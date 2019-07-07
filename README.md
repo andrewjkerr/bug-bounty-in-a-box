@@ -1,6 +1,8 @@
-# hack @ ajoekerr
+# :boom: Bug bounty in a box
 
-:boom: Bug bounty in a box! This repository contains all that you should need to get up and running to test for bugs against your targets.
+This repository contains all\* that you should need to get up and running to test for bugs against your targets.
+
+\* Ok, literally not _everything_ but it's a good start!
 
 ## Project Status
 
