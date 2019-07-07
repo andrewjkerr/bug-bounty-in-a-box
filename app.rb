@@ -6,6 +6,7 @@ require 'singleton'
 require 'yaml'
 
 require_relative 'helpers/config.rb'
+require_relative 'helpers/content_type.rb'
 require_relative 'helpers/payload.rb'
 require_relative 'helpers/request.rb'
 require_relative 'helpers/slack.rb'
@@ -47,24 +48,18 @@ get '/' do
     'Hello world!'
 end
 
-# GET, POST, PUT/PATCH, DELETE, OPTIONS /callback
+# GET, POST, PUT/PATCH, DELETE, HEAD, OPTIONS /callback
 #
 # A callback route that:
 # 1. Logs the callback parameters
 # 2. Alerts in Slack
-#
-# Required parameters:
-#
-# Optional parameters:
-#
-# Example: GET /callback
 route *ALL_HTTP_METHODS, '/callback' do
     payload = Payload::create_payload_from_request_parameters(params)
     payload.log! unless payload.nil?
     "Callback successful!\n"
 end
 
-# GET, POST, PUT/PATCH, DELETE, OPTIONS /redirect
+# GET, POST, PUT/PATCH, DELETE, HEAD, OPTIONS /redirect
 #
 # A callback route that:
 # 1. Logs the callback parameters
@@ -77,8 +72,35 @@ end
 #
 # Example: GET /redirect?redirect=https://www.example.com
 route *ALL_HTTP_METHODS, '/redirect' do
-    halt 400, "Empty redirect parameter" if params['redirect'].nil?
+    halt 400, 'Empty redirect parameter' if params['redirect'].nil?
     redirect params['redirect']
+end
+
+# GET, POST, PUT/PATCH, DELETE, HEAD, OPTIONS /unauthorized
+#
+# A route that returns a 401 for a given content type. Will return 200 for OPTIONS & HEAD
+# unless 'force_401' is set.
+#
+# Optional parameters:
+# * `content_type`: The content type constant name in ContentType.
+# * `force_401`: Should we force a 401 for OPTIONS & HEAD requests?
+#
+# Example: GET /unauthorized?content_type=audio_mpeg
+route *ALL_HTTP_METHODS, '/unauthorized' do
+    unless params['content_type'].nil?
+        content_type_constant = params['content_type'].upcase
+        if ContentType.const_defined?(content_type_constant)
+            headers['Content-Type'] = ContentType.const_get(content_type_constant)
+        end
+    end
+
+    # Special processing if it's an OPTIONS or a HEAD.
+    if env['REQUEST_METHOD'] == 'OPTIONS' || env['REQUEST_METHOD'] == 'HEAD'
+        halt 200, 'Ok' unless params['force_401']
+    end
+
+    # Return a 401 Unauthorized
+    halt 401
 end
 
 helpers do

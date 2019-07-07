@@ -45,11 +45,16 @@ class Request
         # @return [Hash] Our Payload in Slack "attachment" format.
         def format_for_slack
             # Send the request to Slack.
-            slack_summary = "New request to hack @ ajoekerr"
+            slack_summary = "New request to #{request_uri}"
             slack_attachment_fields = [
                 {
+                    'title': 'Request URI',
+                    'value': request_uri,
+                    'short': false,
+                },
+                {
                     'title': 'IP Address',
-                    'value': request.ip,
+                    'value': ip,
                     'short': false,
                 },
                 {
@@ -101,10 +106,17 @@ class Request
             return @request.params
         end
 
+        # Gets the request URI.
+        #
+        # @return [String] The request URI.
+        def request_uri
+            return @request.env['REQUEST_URI']
+        end
+
         # Gets the summary for the request for logging.
         #
         # @return [String]
         def summary
-            return "IP: #{@request.ip}\tHeaders: #{headers}\tParameters: #{params}"
+            return "Request URI: #{request_uri}\tIP: #{ip}\tHeaders: #{headers}\tParameters: #{params}"
         end
 end

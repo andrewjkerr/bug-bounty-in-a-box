@@ -46,7 +46,6 @@ class Config
     # @param [String] The log.
     # @return [Hash] The logging configuration hash with the file & rotation configuration.
     def logging_configuration(log)
-        p log
         raise Exception.new('You need to load the configuration before using it.') if @config.nil?
 
         # Capitalize the log if we're given a string that starts with a lowercase letter.
@@ -55,9 +54,6 @@ class Config
 
         logging_class = get_class(class_name)
         raise ArgumentError.new("Logging class does not exist: #{log}") if logging_class.nil?
-
-        p @config['logs']
-        p @config['logs'][log]
 
         # If we don't have a configuration, just return the defaults.
         if @config['logs'].nil? || @config['logs'][log].nil?
