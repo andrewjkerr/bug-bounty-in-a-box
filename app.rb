@@ -66,7 +66,10 @@ end
 # A route that returns a payload file.
 #
 # Required parameters:
-# * `type`: The payload type.
+# * `type`: The payload type (i.e. 'js').
+# * `exploit`: The exploit type (i.e. 'xss').
+#
+# Example: GET /payload?type=js&exploit=xss&target=www.example.com
 route *ALL_HTTP_METHODS, '/payload' do
     halt 400, 'No type provided.' if params['type'].nil?
     halt 400, 'No exploit provided.' if params['exploit'].nil?
