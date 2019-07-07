@@ -67,8 +67,8 @@ module Slack
             'color': LEVEL_COLORS[level],
             'pretext': summary,
             'fields': fields,
-            'footer': 'hack @ ajoekerr',
-            'footer_icon': 'https://66.media.tumblr.com/avatar_97f6f9d3bdbe_128.pnj',
+            'footer': 'bug bounty in a box',
+            'footer_icon': 'https://media.giphy.com/media/9WC8WTZsFxkRi/giphy.gif',
         }
     end
 end

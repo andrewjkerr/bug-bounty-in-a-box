@@ -1,3 +1,5 @@
+# The URL of this application
+application_url: 'localhost:4567'
 # The Slack webhook endpoint.
 slack_url: 'https://hooks.slack.com/services/<something>'
 # Logging configuration.
