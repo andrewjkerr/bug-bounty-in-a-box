@@ -33,13 +33,6 @@ ALL_HTTP_METHODS = [
 # @return [String] The default config file location.
 DEFAULT_CONFIG_FILE = 'config/application.yml'
 
-# Execute this method before any request! Currently all this does is
-# log the request to our request log.
-before do
-    @incoming_request = Request.new(request)
-    @incoming_request.log!
-end
-
 # GET /
 #
 # A nice lil' "Hello world!" index.
@@ -55,6 +48,8 @@ end
 # 1. Logs the callback parameters
 # 2. Alerts in Slack
 route *ALL_HTTP_METHODS, '/callback' do
+    log_request!
+
     payload = Payload::create_payload_from_request_parameters(params)
     payload.log! unless payload.nil?
     "Callback successful!\n"
@@ -70,6 +65,8 @@ end
 #
 # Example: GET /payload?type=js&exploit=xss&target=www.example.com
 route *ALL_HTTP_METHODS, '/payload' do
+    log_request!
+
     halt 400, 'No type provided.' if params['type'].nil?
     halt 400, 'No exploit provided.' if params['exploit'].nil?
 
@@ -116,6 +113,8 @@ end
 # Required parameters:
 # * `redirect`: The URL to redirect to.
 route *ALL_HTTP_METHODS, '/redirect' do
+    log_request!
+
     halt 400, 'Empty redirect parameter' if params['redirect'].nil?
     redirect params['redirect']
 end
@@ -131,6 +130,8 @@ end
 #
 # Example: GET /unauthorized?content_type=audio_mpeg
 route *ALL_HTTP_METHODS, '/unauthorized' do
+    log_request!
+
     unless params['content_type'].nil?
         content_type_constant = params['content_type'].upcase
         if ContentType.const_defined?(content_type_constant)
@@ -145,6 +146,16 @@ route *ALL_HTTP_METHODS, '/unauthorized' do
 
     # Return a 401 Unauthorized
     halt 401
+end
+
+helpers do
+    # Logs an incoming request & sends a Slack message.
+    #
+    # @return [Void]
+    def log_request!
+        @incoming_request = Request.new(request)
+        @incoming_request.log!
+    end
 end
 
 ##

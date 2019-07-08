@@ -1,5 +1,14 @@
 # :rocket: CHANGELOG
 
+How Bug Bounty in a Box is _currently_ versioned:
+* Lil' bug fixes that don't modify any features will be revisionary version releases.
+* New features, changes in functionality, or major refactoring will be minor version releases.
+* After 1.0, the versioning strategy will change. :smile:
+
+## :relieved: Version 0.03
+
+This lil' release only logs requests for valid, non-index routes 'cause it gets noisy :sweat_smile:.
+
 ## :soccer: Version 0.02
 
 This second pre-release version contains some new routes:
