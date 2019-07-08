@@ -7,7 +7,7 @@ How Bug Bounty in a Box is _currently_ versioned:
 
 ## :relieved: Version 0.03
 
-This lil' release only logs requests for valid, non-index routes 'cause it gets noisy :sweat_smile:.
+This lil' release only logs requests for valid, non-index routes 'cause it gets noisy :sweat_smile:. I've also fixed a bug with the SVG & XML payloads.
 
 ## :soccer: Version 0.02
 
