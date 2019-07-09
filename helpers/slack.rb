@@ -1,10 +1,5 @@
 # A lil' helper class for sending Slack messages to our Slack endpoint.
 module Slack
-
-    # The endpoint for sending messages to our Slack instance.
-    # @return [String] Our Slack endpoint.
-    URL = 'https://hooks.slack.com/services/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'
-
     # Constants for the various levels of Slack attachments.
     LEVEL_INFO = 'info'
     LEVEL_LOW = 'low'
