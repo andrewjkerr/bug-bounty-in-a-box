@@ -68,6 +68,7 @@ The callback server, written in Ruby & using [Sinatra](http://sinatrarb.com/), c
         * JavaScript (`js`) for XSS
         * SVG (`svg`) for XSS
         * XML (`xml`) for XXE
+        * XML (`svg`) for XXE
 * Redirect: Redirects to a specified URL in the redirect GET parameter. (`/redirect`)
 * Unauthorized: Throws a 401 for non-OPTIONS & non-HEAD requests. Also accepts a content_type parameter to return a specific content type. (`/unauthorized`)
 

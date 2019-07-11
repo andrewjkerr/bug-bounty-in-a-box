@@ -5,6 +5,10 @@ How Bug Bounty in a Box is _currently_ versioned:
 * New features, changes in functionality, or major refactoring will be minor version releases.
 * After 1.0, the versioning strategy will change. :smile:
 
+## :banana: Verison 0.04
+
+This mini-release adds a payload for XXE via an SVG file! Anddddd that's it! Nice!
+
 ## :relieved: Version 0.03
 
 This lil' release only logs requests for valid, non-index routes 'cause it gets noisy :sweat_smile:. I've also fixed a bug with the SVG & XML payloads.
