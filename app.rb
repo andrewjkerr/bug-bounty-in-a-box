@@ -77,6 +77,7 @@ route *ALL_HTTP_METHODS, '/payload' do
         ],
         'xxe' => [
             'xml',
+            'svg',
         ]
     }
 
