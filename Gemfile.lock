@@ -25,7 +25,7 @@ GEM
       method_source (~> 0.9.0)
     pry-coolline (0.2.5)
       coolline (~> 0.5)
-    rack (2.0.7)
+    rack (2.0.8)
     rack-protection (2.0.5)
       rack
     rb-fsevent (0.10.3)
@@ -58,7 +58,7 @@ DEPENDENCIES
   pry (~> 0.12.2)
   pry-coolline (~> 0.2.5)
   rerun (~> 0.13.0)
-  ruby-progressbar
+  ruby-progressbar (~> 1.10.1)
   sinatra (~> 2.0.5)
   sinatra-contrib (~> 2.0.5)
 
