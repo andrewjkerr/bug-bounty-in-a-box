@@ -7,3 +7,6 @@
 # Ignore the payloads
 /payloads/*.yml
 /payloads/*.txt
+
+# Ignore the GitHub files
+/.github

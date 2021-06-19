@@ -1,0 +1,48 @@
+name: Deploy to Hack
+on:
+  # Only run the workflow after a new Docker image is published.
+  workflow_run:
+    workflows:
+      - Publish Docker image
+    branches:
+      - main
+    types:
+      - completed
+jobs:
+  deploy:
+    name: "Deploy to Hack"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/hack.key
+          chmod 600 ~/.ssh/hack.key
+          cat >>~/.ssh/config <<END
+          Host hack
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/hack.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.HACK_DEPLOY_SSH_USER }}
+          SSH_KEY: ${{ secrets.HACK_DEPLOY_SSH_KEY }}
+          SSH_HOST: ${{ secrets.HACK_DEPLOY_SSH_HOST }}
+
+      - name: Kill running Docker containers
+        run: ssh hack 'docker kill $(docker ps -q)'
+
+      - name: Pull the latest Docker container
+        run: ssh hack 'docker pull andrewjkerr/bug-bounty-in-a-box:latest'
+
+      - name: Start the new container
+        run: |
+          ssh hack '
+            docker run -d \
+              -v ${{ secrets.BUG_BOUNTY_IN_A_BOX_CONFIG }}:/app/config/application.yml \
+              -v ${{ secrets.BUG_BOUNTY_IN_A_BOX_LOGS_DIRECTORY }}:/app/logs/ \
+              -p ${{ secrets.BUG_BOUNTY_IN_A_BOX_PORT }}:4567 \
+              -e "APP_ENV=production" \
+              andrewjkerr/bug-bounty-in-a-box:latest
+          '
