@@ -8,7 +8,7 @@ gem 'sinatra', '~> 2.0.5'
 gem 'sinatra-contrib', '~> 2.0.5'
 
 # An easy way to make HTTP requests
-gem 'httparty', '~> 0.17.0'
+gem 'httparty', '~> 0.21.0'
 
 group :development do
     # Allows for reloading of our Sinatra server
